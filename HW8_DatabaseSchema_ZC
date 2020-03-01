@@ -1,0 +1,28 @@
+﻿
+--drop these tables if they're already in the db
+DROP TABLE IF EXISTS station CASCADE;
+DROP TABLE IF EXISTS measurements;
+
+--edited the table creation statements in order to add primary keys since this seemed to be preventing automap_base from reflecting the existing table classes.
+CREATE TABLE station (
+    station VARCHAR(255)   NOT NULL,
+    name VARCHAR(255)   NOT NULL,
+    latitude FLOAT   NOT NULL,
+    longitude FLOAT   NOT NULL,
+    elevation FLOAT   NOT NULL,
+    CONSTRAINT pk_station PRIMARY KEY (station)
+);
+
+CREATE TABLE measurements (
+    station VARCHAR(255)   NOT NULL,
+    date DATE   NOT NULL,
+    prcp FLOAT ,
+    tobs FLOAT ,
+    CONSTRAINT pk_measurements PRIMARY KEY (station, date)
+ 
+);
+
+--ALTER TABLE measurements ADD CONSTRAINT fk_measurements_station FOREIGN KEY(station)
+--REFERENCES station (station);
+
+--Note, you will need to import the csv into "station" prior to importing the data into "measurements" since "measurements" depends on a foreign key from "station."
